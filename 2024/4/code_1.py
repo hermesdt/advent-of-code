@@ -1,6 +1,5 @@
 import string
 import torch
-import numpy as np
 
 ascii_letters = [" "] + list(string.ascii_uppercase)
 lines = []
@@ -10,7 +9,7 @@ def encode(letters):
         [ascii_letters.index(c) for c in line]
         for line in letters
     ]
-    return torch.tensor(x, dtype=torch.float32)[None, None, ...]
+    return torch.tensor(x, dtype=torch.float32)[None, None, ...] # [batch, channel, height, width]
 
 horizontal = encode([["X", "M", "A", "S"]])
 horizontal_rev = encode([["S", "A", "M", "X"]])
@@ -35,7 +34,7 @@ with open("input.txt") as f:
         )
 
 target = horizontal.squeeze() @ horizontal.squeeze()
-matrix = torch.tensor(lines, dtype=torch.float32)[None, None, ...]
+matrix = torch.tensor(lines, dtype=torch.float32)[None, None, ...] # [batch, channel, height, width]
 
 res = sum([
     (torch.nn.functional.conv2d(matrix, kernel) == target).sum()

@@ -1,6 +1,5 @@
 import string
 import torch
-import numpy as np
 
 ascii_letters = [" "] + list(string.ascii_uppercase)
 lines = []
